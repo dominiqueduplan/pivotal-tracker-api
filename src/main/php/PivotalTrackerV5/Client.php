@@ -47,6 +47,18 @@ class Client
         $this->client->addHeader( 'X-TrackerToken',  $apiKey );
         $this->project = $project;
     }
+    
+    /**
+     * Returns information from the user's profile plus the list of projects to which the user has access.
+     * @return object
+     */
+    public function me() {
+        return json_decode(
+            $this->client->get(
+                "/me"
+            )
+        );
+    }
 
  
     /**
