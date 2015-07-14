@@ -29,3 +29,13 @@ $story =  array(
 $result = $pivotalTracker->addStory( $story )  ;
 
 ```
+
+Provides information about the authenticated user :
+
+```php
+
+$pivotalTracker =  new \PivotalTrackerV5\Client(  $apiToken , $projectId ) ;
+
+$meInformations = $pivotalTracker->me()  ;
+
+```
