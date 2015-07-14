@@ -40,11 +40,19 @@ class Client
      * @param string $apiKey  API Token provided by PivotalTracking
      * @param string $project Project ID
      */
-    public function __construct( $apiKey, $project )
+    public function __construct( $apiKey, $project = null )
     {
         $this->client = new Rest\Client( self::API_URL );
         $this->client->addHeader( 'Content-type', 'application/json' );
         $this->client->addHeader( 'X-TrackerToken',  $apiKey );
+        $this->project = $project;
+    }
+    
+    /**
+     * Change current project ID
+     * @param int $project ID of the project
+     */
+    public function setProject($project) {
         $this->project = $project;
     }
     
@@ -80,11 +88,11 @@ class Client
      * @param array $story
      * @param string $name
      * @param string $description
-     * @return object
+     * @return object or null if project is null
      */
     public function addStory( array $story  )
     {
-      
+        if ($this->project == null) return null;
         return json_decode(
             $this->client->post(
                 "/projects/{$this->project}/stories",
@@ -103,6 +111,7 @@ class Client
      */
     public function addTask( $storyId, $description )
     {
+        if ($this->project == null) return null;
         return simplexml_load_string(
             $this->client->post(
                 "/projects/{$this->project}/stories/$storyId/tasks",
@@ -122,6 +131,7 @@ class Client
      */
     public function addLabels( $storyId, array $labels )
     {
+        if ($this->project == null) return null;
         return json_decode(
             $this->client->put(
                 "/projects/{$this->project}/stories/$storyId",
@@ -138,6 +148,7 @@ class Client
      */
     public function getStories( $filter = null )
     {
+        if ($this->project == null) return null;
         return json_decode(
             $this->client->get(
                 "/projects/{$this->project}/stories",
