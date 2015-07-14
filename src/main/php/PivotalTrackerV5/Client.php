@@ -171,7 +171,6 @@ class Client
     {
         $url = "/projects/$id/iterations?";
         $url .= $filter && array_walk($filter, array($this, 'explodeParams')) ? implode("&", $filter) : "";
-        echo $url;
         return json_decode(
             $this->client->get(
                 $url
