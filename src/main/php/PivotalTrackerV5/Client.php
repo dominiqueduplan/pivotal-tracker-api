@@ -59,6 +59,18 @@ class Client
             )
         );
     }
+    
+    /**
+     * Return list of the notifications for the authenticated person. Response is sorted by notification created_at, most recent first.
+     * @return object
+     */
+    public function getMyNotifications() {
+        return json_decode(
+            $this->client->get(
+                "/my/notifications"
+            )
+        );
+    }
 
  
     /**
@@ -132,6 +144,49 @@ class Client
                 $filter ? array( 'filter' => $filter ) : null
             )
         );
+    }
+    
+    /**
+     * Fetch the content of the specified project.
+     * @param int $id The ID of the project.
+     * @return object
+     */
+    public function getProject($id)
+    {
+        return json_decode(
+            $this->client->get(
+                "/projects/$id"
+            )
+        );
+
+    }
+    
+    /**
+     * Return a set of iterations from the project. (Paginated)
+     * @param int $id The ID of the project.
+     * @param array $filter query parameters
+     * @return object
+     */
+    public function getProjectIteractions($id, $filter = null)
+    {
+        $url = "/projects/$id/iterations?";
+        $url .= $filter && array_walk($filter, array($this, 'explodeParams')) ? implode("&", $filter) : "";
+        echo $url;
+        return json_decode(
+            $this->client->get(
+                $url
+            )
+        );
+
+    }
+    
+    /**
+     * Return new item for query filter
+     * @param string $item
+     * @param type $key
+     */
+    private function explodeParams(&$item, $key) {
+        $item = $key."=".$item;
     }
 
     /**

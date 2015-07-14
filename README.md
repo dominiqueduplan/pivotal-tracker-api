@@ -39,3 +39,33 @@ $pivotalTracker =  new \PivotalTrackerV5\Client(  $apiToken , $projectId ) ;
 $meInformations = $pivotalTracker->me()  ;
 
 ```
+
+Provides a list of all notifications.
+
+```php
+
+$pivotalTracker =  new \PivotalTrackerV5\Client(  $apiToken , $projectId ) ;
+
+$myNotifications = $pivotalTracker->getMyNotifications();
+
+```
+
+Access the project specified by the project_id value.
+
+```php
+
+$pivotalTracker =  new \PivotalTrackerV5\Client(  $apiToken , $projectId ) ;
+
+$project = $pivotalTracker->getProject($otherProjectId);
+
+```
+
+Allows iterations to be retrieved, with optional scope, limit and offset. 
+
+```php
+
+$pivotalTracker =  new \PivotalTrackerV5\Client(  $apiToken , $projectId ) ;
+
+$project = $pivotalTracker->getProjectIteractions($otherProjectId, array('scope'=>'done'));
+
+```
